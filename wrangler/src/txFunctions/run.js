@@ -23,7 +23,7 @@ export default async ({ request, params, env, ctx }) => {
     RUN_DIVISOR 
   } = env
   const { txFunctionHash } = params
-
+//console.log(`- txFunctionHash ${txFunctionHash}`)
   const { value, metadata } = await TX_FUNCTIONS.getWithMetadata(txFunctionHash, 'arrayBuffer')
 
   if (!value)

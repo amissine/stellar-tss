@@ -10,12 +10,12 @@ import turretToml from '../turret/toml'
 export default async ({ request, params, env }) => {
   const { TX_FUNCTIONS, TURRET_ADDRESS, STELLAR_NETWORK, HORIZON_URL } = env
   const { 
-    functionHash: txFunctionHash, 
+    /*functionHash:*/ txFunctionHash, 
     sourceAccount, 
     removeTurret, 
     addTurret 
   } = await request.json()
-
+console.log(`- txFunctionHash ${txFunctionHash}`)
   if (
     removeTurret === TURRET_ADDRESS
     || addTurret === TURRET_ADDRESS
