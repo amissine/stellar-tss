@@ -23,7 +23,6 @@ export default async ({ request, params, env, ctx }) => {
     RUN_DIVISOR 
   } = env
   const { txFunctionHash } = params
-//console.log(`- txFunctionHash ${txFunctionHash}`)
   const { value, metadata } = await TX_FUNCTIONS.getWithMetadata(txFunctionHash, 'arrayBuffer')
 
   if (!value)
@@ -151,7 +150,7 @@ export default async ({ request, params, env, ctx }) => {
     cost,
     feeTotal,
     feeSpent
-  } = await fetch(`${TURRET_RUN_URL}/${txFunctionHash}`, {
+  } = await fetch(`${TURRET_RUN_URL}/${txFunctionHash}`, { // {{{1
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -165,7 +164,7 @@ export default async ({ request, params, env, ctx }) => {
       txFunction,
     })
   })
-  .then(async (res) => {
+  .then(async (res) => { // {{{1
     watch.mark('Ran txFunction')
 
     const now = moment.utc().format('x')
@@ -195,7 +194,7 @@ export default async ({ request, params, env, ctx }) => {
       feeTotal,
       feeSpent,
     }
-  })
+  }) // }}}1
 
   if (error) return response.json({
     ...error,

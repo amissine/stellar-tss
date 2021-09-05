@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import { Keypair, FastSigning } from 'stellar-sdk'
+import moment from 'moment' // to eval recurring
 
 export default async (event) => {
   try {
@@ -70,11 +71,7 @@ export default async (event) => {
     // )
     // const result = await txFunction(body)
 
-    const result = await eval(`
-      'use strict'; 
-      ${txFunctionCode};
-      module.exports;
-    `)(body)
+    const result = await invoke(txFunctionCode, body)
 
     return {
       statusCode: 200,
@@ -108,5 +105,14 @@ export default async (event) => {
         status: err.status,
       })
     }
+  }
+
+  async function invoke (txFunction, body) {
+    const result = eval(`
+      'use strict'; 
+      ${txFunction};
+      module.exports;
+    `)
+    return await result.txFunction(body);
   }
 }
